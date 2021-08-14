@@ -11,4 +11,6 @@ interface ServerInterface
     public const SERVER_BASE = 3;
 
     public function start();
+
+    public function init(ServerConfig $config): ServerInterface;
 }

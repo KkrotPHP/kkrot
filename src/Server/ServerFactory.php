@@ -13,14 +13,12 @@ class ServerFactory
         protected ContainerInterface $container
     ){}
 
-    public function getServer(): ServerInterface{
-        if(! $this->server instanceof ServerInterface){
-            $this->server = new Server();
+    public function getServer(array $config): ServerInterface{
+        $config = new ServerConfig($config);
+        if(!isset($this->server)){
+            $this->server = new Server($this->container);
+            $this->server->init($config);
         }
         return $this->server;
-    }
-
-    public function start(){
-        return $this->getServer()->start();
     }
 }
