@@ -2,8 +2,8 @@
 
 namespace Kkrot\Server;
 
-use Kkrot\Di\ContainerInterface;
-use Kkrot\Server\Impl\Server;
+use Kkrot\Di\Contract\ContainerInterface;
+use Kkrot\Server\Contract\ServerInterface;
 
 class ServerFactory
 {

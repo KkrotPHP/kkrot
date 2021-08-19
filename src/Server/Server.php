@@ -1,13 +1,12 @@
 <?php
 
-namespace Kkrot\Server\Impl;
+namespace Kkrot\Server;
 
-use Hyperf\Server\Event;
-use Kkrot\Di\ContainerInterface;
-use Kkrot\Server\ServerConfig;
-use Kkrot\Server\ServerInterface;
+use Kkrot\Di\Contract\ContainerInterface;
+use Kkrot\Server\Contract\ServerInterface;
 use RuntimeException;
 use Swoole\Http\Server as SwooleHttpServer;
+use const SWOOLE_PROCESS;
 
 class Server implements ServerInterface
 {
@@ -30,8 +29,11 @@ class Server implements ServerInterface
 
     protected function initServers(ServerConfig $config)
     {
-        $this->swooleServer = $this->makeServer($config->getType(),$config->getHost(),$config->getPort(),SWOOLE_PROCESS,$config->getSockType());
-        $this->registerSwooleEvents($this->swooleServer);
+        $servers = $config->getServers();
+        foreach ($servers as $server){
+            $this->swooleServer = $this->makeServer($server->getType(),$server->getHost(),$server->getPort(),SWOOLE_PROCESS,$server->getSockType());
+            $this->registerSwooleEvents($this->swooleServer,$server->getCallbacks());
+        }
     }
 
     protected function makeServer(int $type, string $host, int $port, int $mode, int $sockType): SwooleHttpServer
@@ -43,9 +45,11 @@ class Server implements ServerInterface
         throw new RuntimeException('Server type is invalid.');
     }
 
-    protected function registerSwooleEvents(SwooleHttpServer $server): void
+    protected function registerSwooleEvents(SwooleHttpServer $server,array $callbacks): void
     {
-        $server->on('request',[new \Kkrot\HttpServer\OnRequest(),'onRequest']);
-        // $server->on('response',[new \Kkrot\HttpServer\Response(),'onResponse']);
+        foreach ($callbacks as $event => $callback){
+            // if (! Event::isSwooleEvent($event))  continue;
+            $server->on($event,[(new $callback[0]),$callback[1]]);
+        }
     }
 }

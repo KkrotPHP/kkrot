@@ -1,6 +1,8 @@
 <?php
 
-namespace Kkrot\Server;
+namespace Kkrot\Server\Contract;
+
+use Kkrot\Server\ServerConfig;
 
 interface ServerInterface
 {

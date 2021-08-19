@@ -6,11 +6,18 @@ use Kkrot\Server\Exception\InvalidArgumentException;
 use Kkrot\Utils\Contracts\Arrayable;
 
 /**
- * @method int getType()
- * @method int getPort()
- * @method string getHost()
- * @method int getModel()
- * @method int getSockType()
+ * @method ServerConfig setType(string $type)
+ * @method ServerConfig setMode(int $mode)
+ * @method ServerConfig setServers(array $servers)
+ * @method ServerConfig setProcesses(array $processes)
+ * @method ServerConfig setSettings(array $settings)
+ * @method ServerConfig setCallbacks(array $callbacks)
+ * @method string getType()
+ * @method int getMode()
+ * @method ServerPort[] getServers()
+ * @method array getProcesses()
+ * @method array getSettings()
+ * @method array getCallbacks()
  */
 class ServerConfig implements Arrayable
 {
@@ -34,6 +41,22 @@ class ServerConfig implements Arrayable
     public function __construct(array $config = [])
     {
         $this->config = $config;
+
+        if (empty($config['servers'] ?? [])) {
+            throw new InvalidArgumentException('Config server.servers not exist.');
+        }
+
+        $servers = [];
+        foreach ($config['servers'] as $item) {
+            $servers[] = ServerPort::build($item);
+        }
+
+        $this->setType($config['type'] ?? Server::class)
+            ->setMode($config['mode'] ?? 0)
+            ->setServers($servers)
+            ->setProcesses($config['processes'] ?? [])
+            ->setSettings($config['settings'] ?? [])
+            ->setCallbacks($config['callbacks'] ?? []);
     }
 
     public function __get(string $name)
@@ -62,9 +85,8 @@ class ServerConfig implements Arrayable
 
     private function isAvailableProperty(string $name): bool
     {
-        return true;
-        // return in_array($name, [
-        //     'type', 'mode', 'servers', 'processes', 'settings', 'callbacks',
-        // ]);
+        return in_array($name, [
+            'type', 'mode', 'servers', 'processes', 'settings', 'callbacks',
+        ]);
     }
 }

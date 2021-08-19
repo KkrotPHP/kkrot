@@ -1,8 +1,9 @@
 <?php
 
 if (! function_exists('dump')) {
-    function dump($var){
-        var_dump($var);
-        echo PHP_EOL;
+    function dump($data, $key = '')
+    {
+        echo "<----------------- $key ---------------------->" . PHP_EOL;
+        var_dump($data);
     }
 }

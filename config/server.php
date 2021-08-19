@@ -1,7 +1,9 @@
 <?php
 
 
-use Kkrot\Server\ServerInterface;
+use Kkrot\HttpServer\OnRequest;
+use Kkrot\Server\Contract\ServerInterface;
+use Kkrot\Server\Event;
 use Swoole\Constant;
 
 return [
@@ -11,10 +13,10 @@ return [
             'name' => 'http',
             'type' => ServerInterface::SERVER_HTTP,
             'host' => '0.0.0.0',
-            'port' => 9502,
-            'socktype' => SWOOLE_SOCK_TCP,
+            'port' => 9501,
+            'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
-                // Event::ON_REQUEST => [Hyperf\HttpServer\Server::class, 'onRequest'],
+                Event::ON_REQUEST => [OnRequest::class, 'onRequest'],
             ],
         ],
     ],

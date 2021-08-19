@@ -1,10 +1,8 @@
 <?php
 
-namespace Kkrot\Di\Impl;
+namespace Kkrot\Di;
 
-use Kkrot\Di\ContainerInterface;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Kkrot\Di\Contract\ContainerInterface;
 
 class Container implements ContainerInterface
 {
