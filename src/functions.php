@@ -7,3 +7,11 @@ if (! function_exists('dump')) {
         var_dump($data);
     }
 }
+
+if (! function_exists('make')) {
+    function make(string $name, array $parameters = [])
+    {
+        $parameters = array_values($parameters);
+        return new $name(...$parameters);
+    }
+}

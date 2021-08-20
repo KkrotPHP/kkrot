@@ -1,6 +1,6 @@
 <?php
 
-namespace Kkrot\HttpServer\Contract;
+namespace Kkrot\HttpServer\Server\Contract;
 
 interface ResponseInterface extends \Psr\Http\Message\ResponseInterface
 {

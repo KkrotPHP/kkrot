@@ -1,6 +1,6 @@
 <?php
 
-namespace Kkrot\HttpServer\Contract;
+namespace Kkrot\HttpServer\Server\Contract;
 
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 
