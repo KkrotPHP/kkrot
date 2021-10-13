@@ -3,7 +3,7 @@
 namespace Kkrot\Server;
 
 use Kkrot\Server\Exception\InvalidArgumentException;
-use Kkrot\Utils\Contracts\Arrayable;
+use Kkrot\Utils\Contract\Arrayable;
 
 /**
  * @method ServerConfig setType(string $type)

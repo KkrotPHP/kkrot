@@ -2,18 +2,19 @@
 
 namespace Kkrot\Di;
 
+
+use Hyperf\Di\Definition;
 use Kkrot\Di\Contract\ContainerInterface;
 
-class Container implements ContainerInterface
+class Container extends \Hyperf\Di\Container implements \Kkrot\Di\Contract\ContainerInterface
 {
-
-    public function get(string $id)
+    /**
+     * @template T
+     * @param class-string<T>|string $name
+     * @return T
+     */
+    public function get($name)
     {
-        // TODO: Implement get() method.
-    }
-
-    public function has(string $id)
-    {
-        // TODO: Implement has() method.
+        return parent::get($name);
     }
 }

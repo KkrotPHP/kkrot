@@ -2,6 +2,7 @@
 
 namespace Kkrot\HttpServer;
 
+use Hyperf\Utils\Context;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Kkrot\HttpServer\Message\Stream\SwooleStream;

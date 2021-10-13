@@ -2,6 +2,6 @@
 
 namespace Kkrot\Di\Contract;
 
-interface ContainerInterface extends \Psr\Container\ContainerInterface
+interface ContainerInterface extends \Hyperf\Contract\ContainerInterface
 {
 }

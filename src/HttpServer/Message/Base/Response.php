@@ -2,7 +2,9 @@
 
 namespace Kkrot\HttpServer\Message\Base;
 
-class Response
+use Psr\Http\Message\ResponseInterface;
+
+class Response implements ResponseInterface
 {
     use MessageTrait;
 

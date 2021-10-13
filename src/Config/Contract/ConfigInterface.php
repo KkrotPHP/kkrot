@@ -1,7 +1,7 @@
 <?php
-namespace Kkrot\Config;
+namespace Kkrot\Config\Contract;
 
-interface ConfigInterface
+interface ConfigInterface extends \Hyperf\Contract\ConfigInterface
 {
     /**
      * @param string $key

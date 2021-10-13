@@ -2,8 +2,8 @@
 
 namespace Kkrot\Server;
 
-use Kkrot\Di\Contract\ContainerInterface;
 use Kkrot\Server\Contract\ServerInterface;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Swoole\Http\Server as SwooleHttpServer;
 use const SWOOLE_PROCESS;
@@ -49,7 +49,7 @@ class Server implements ServerInterface
     {
         foreach ($callbacks as $event => $callback){
             // if (! Event::isSwooleEvent($event))  continue;
-            $server->on($event,[(new $callback[0]),$callback[1]]);
+            $server->on($event,[$this->container->get($callback[0]),$callback[1]]);
         }
     }
 }

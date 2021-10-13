@@ -21,10 +21,13 @@
         "psr/http-message": "~1.0",
         "laminas/laminas-mime": "^2.7",
         "nikic/fast-route": ">=1.3",
-        "kkort/utils": "dev-master",
         "illuminate/collections": "9.x-dev",
         "psr/http-server-middleware": "^1.0",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "hyperf/di": "2.2.x-dev",
+        "hyperf/contract": "2.2.x-dev",
+        "hyperf/utils": "2.2.x-dev",
+        "hyperf/config": "2.2.x-dev"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -37,5 +40,13 @@
         "files": [
             "src/functions.php"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "kkrot": {
+            "config": "Kkrot\\ConfigProvider"
+        }
     }
 }
