@@ -3,12 +3,17 @@
 namespace Kkrot\HttpServer\Server;
 
 use FastRoute\Dispatcher;
+use Hyperf\Contract\NormalizerInterface;
+use Hyperf\Di\ClosureDefinitionCollectorInterface;
+use Hyperf\Di\MethodDefinitionCollectorInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Kkrot\HttpServer\Message\Stream\SwooleStream;
 use Kkrot\HttpServer\Response;
 use Kkrot\HttpServer\Server\Contract\CoreMiddlewareInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -16,15 +21,24 @@ use Psr\Http\Server\RequestHandlerInterface;
 class CoreMiddleware implements CoreMiddlewareInterface
 {
 
-    /**
-     * @var Dispatcher
-     */
-    protected $dispatcher;
+    protected Dispatcher $dispatcher;
 
+    private ContainerInterface $container;
+
+    private MethodDefinitionCollectorInterface $methodDefinitionCollector;
+
+    private NormalizerInterface $normalizer;
+
+    private ClosureDefinitionCollectorInterface $closureDefinitionCollector;
+
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
     public function __construct(ContainerInterface $container, string $serverName)
     {
         $this->container = $container;
-        $this->dispatcher = $this->createDispatcher($serverName);
+        // $this->dispatcher = $this->createDispatcher($serverName);
         $this->normalizer = $this->container->get(NormalizerInterface::class);
         $this->methodDefinitionCollector = $this->container->get(MethodDefinitionCollectorInterface::class);
         if ($this->container->has(ClosureDefinitionCollectorInterface::class)) {

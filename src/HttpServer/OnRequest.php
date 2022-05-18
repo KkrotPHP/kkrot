@@ -24,7 +24,7 @@ class OnRequest implements OnRequestInterface
 
     public function __construct(ContainerInterface $container)
     {
-        $this->coreMiddleware = new CoreMiddleware();
+        $this->coreMiddleware = new CoreMiddleware($container, 'request');
         $this->responseEmitter = new ResponseEmitter();
         $this->dispatcher = new HttpDispatcher($container);
     }
@@ -36,7 +36,7 @@ class OnRequest implements OnRequestInterface
     public function onRequest($request, $response): void
     {
         $response->setHeader('Content-Type', 'text/html; charset=utf-8');
-        $response->write('hello');
+        $response->write('hello1');
         [$psr7Request, $psr7Response] = $this->initRequestAndResponse($request, $response);
         $psr7Response = $this->dispatcher->dispatch($psr7Request, [], $this->coreMiddleware);
         $this->responseEmitter->emit($psr7Response, $response, false);
